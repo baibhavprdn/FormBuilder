@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+
+    <!-- materialize css -->
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <script src="js/lib/angular.js"></script>
+    <script src="js/lib/angular-ui-router.min.js"></script>
+    <title>Form Builder</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Builder</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="#">Builder</a></li>
+                    <li><a href="#">View</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div ng-controller="ControlBuilderCtrl">
+        <form id="controlBuilder" name="controlbuilder" ng-submit="submitToFormView()" novalidate>
+            <div class="input-field">
+                <input id="controllerName" type="text" ng-model="ctrlName" class="validate">
+                <label for="controllerName">Controller Name</label>
+            </div>
+            <div class="input-field">
+                <input id="controllerType" type="text" ng-model="ctrlType" class="validate">
+                <label for="controllerType">Controller Type</label>
+            </div>
+            <button type="submit" class="btn waves-effect">Add to Form View</button>
+        </form>
+    </div>
+
+    <script src="js/lib/materialize.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>
