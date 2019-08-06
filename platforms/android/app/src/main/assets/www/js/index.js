@@ -69,7 +69,6 @@ function readDb(dbObj, getArray) {
 function BuilderCtrlFun($scope) {
    var dbObj = openDatabase();
    var dbDataArray = [];
-   $scope.dbData = [];
 
    $scope.submitToFormView = function () {
       insertToDb($scope.ctrlName, $scope.data.singleSelect, dbObj);
@@ -101,6 +100,8 @@ formbuilder.config(['$stateProvider', '$urlRouterProvider', function ($stateProv
 formbuilder.controller('BuilderCtrl', ['$scope', function ($scope) {
    BuilderCtrlFun($scope);
 }]);
+
+//load material components
 document.addEventListener('DOMContentLoaded', function () {
    M.AutoInit();
 });

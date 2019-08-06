@@ -10,6 +10,9 @@
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
 
     <!-- materialize css -->
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <link rel="stylesheet" href="css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 
@@ -56,7 +59,7 @@
             </div>
             <button type="submit" class="btn waves-effect">Add to Form View</button>
         </form>
-        <button class="btn waves-effect" ng-click="generateForm()">Generate Form</button>
+        <button class="btn waves-effect form-generator" ng-click="generateForm()">Generate Form</button>
 
         <form id="viewBuilder" ng-show="generateViewBuilder" novalidate>
             <div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
@@ -66,8 +69,6 @@
                 <label for="{{data.Name}}">{{data.Name}}</label>
             </div>
         </form>
-
-
     </div>
     <div class="view-wrapper" ui-view="">
     </div>
