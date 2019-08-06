@@ -70,10 +70,6 @@ function BuilderCtrlFun($scope) {
    var dbObj = openDatabase();
    var dbDataArray = [];
 
-   $scope.submitToFormView = function () {
-      insertToDb($scope.ctrlName, $scope.data.singleSelect, dbObj);
-   };
-
    var getArray = function (resultsrows) {
       dbDataArray = [];
       var length = resultsrows.length,
@@ -86,9 +82,14 @@ function BuilderCtrlFun($scope) {
       $scope.generateViewBuilder = true;
    };
 
-   $scope.generateForm = function () {
+   $scope.submitToFormView = function () {
+      insertToDb($scope.ctrlName, $scope.data.singleSelect, dbObj);
       readDb(dbObj, getArray);
    };
+
+   // $scope.generateForm = function () {
+   //    readDb(dbObj, getArray);
+   // };
 }
 
 document.addEventListener('deviceready', onDeviceReady, false);

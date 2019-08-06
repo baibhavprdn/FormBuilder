@@ -58,8 +58,9 @@
                 <label>Controller Type</label>
             </div>
             <button type="submit" class="btn waves-effect">Add to Form View</button>
+            <button class="btn waves-effect" ng-click="generateViewBuilder=false">Clear Form View</button>
         </form>
-        <button class="btn waves-effect form-generator" ng-click="generateForm()">Generate Form</button>
+        <!-- <button class="btn waves-effect form-generator" ng-click="generateForm()">Generate Form</button> -->
 
         <form id="viewBuilder" ng-show="generateViewBuilder" novalidate>
             <div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
