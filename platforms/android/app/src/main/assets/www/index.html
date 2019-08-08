@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
@@ -10,8 +9,7 @@
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
 
     <!-- materialize css -->
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
 
     <link rel="stylesheet" href="css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -40,43 +38,14 @@
         </ul>
     </header>
 
-    <div class="view-wrapper" ng-controller="BuilderCtrl">
-        <form id="controlBuilder" name="controlbuilder" ng-submit="submitToFormView()" novalidate>
-            <div class="input-field">
-                <input id="controllerName" type="text" ng-model="ctrlName" class="validate">
-                <label for="controllerName">Controller Name</label>
-            </div>
-            <div class="input-field">
-                <select name="singleSelect" ng-model="data.singleSelect">
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="text">Text</option>
-                    <option value="textarea">TextArea</option>
-                    <option value="password">Password</option>
-                    <option value="email">Email</option>
-                    <option value="number">Number</option>
-                </select>
-                <label>Controller Type</label>
-            </div>
-            <button type="submit" class="btn waves-effect">Add to Form View</button>
-            <button class="btn waves-effect" ng-click="generateViewBuilder=false">Clear Form View</button>
-        </form>
-        <!-- <button class="btn waves-effect form-generator" ng-click="generateForm()">Generate Form</button> -->
-
-        <form id="viewBuilder" ng-show="generateViewBuilder" novalidate>
-            <div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
-                <textarea name="{{data.Name}}" id="{{data.Name}}" cols="30" rows="10"
-                    ng-switch-when="textarea"></textarea>
-                <input id="{{data.Name}}" type="{{data.Type}}" class="validate" ng-switch-default>
-                <label for="{{data.Name}}">{{data.Name}}</label>
-            </div>
-        </form>
-    </div>
     <div class="view-wrapper" ui-view="">
     </div>
-
-    <script src="js/lib/materialize.min.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script src="js/configRoutes.js"></script>
+    <script src="js/dbservice.js"></script>
+    <script src="js/builderCtrl.js"></script>
+    <script src="js/lib/materialize.min.js"></script>
 </body>
 
 </html>

@@ -1,1 +1,1 @@
-{"plugins":["cordova-plugin-whitelist","cordova-sqlite-storage"]}
+{"plugins":["cordova-plugin-whitelist","cordova-sqlite-storage","cordova-plugin-x-toast"]}
