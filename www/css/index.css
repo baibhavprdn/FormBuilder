@@ -1,3 +1,7 @@
+:root{
+    --button-color__primary:#26a69a;
+}
+
 * {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     /* make transparent link selection, adjust last value opacity 0 to 1.0 */
@@ -32,7 +36,6 @@ body {
     margin-top: 1rem;
 }
 
-
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {
@@ -43,4 +46,25 @@ body {
         /* offset vertical: half of image height */
         /* offset horizontal: half of image width and text area width */
     }
+}
+
+/* material dialog */
+
+.mdl-dialog__title,.mdl-dialog__content,.mdl-dialog__actions{
+    padding:10px 10px 0;
+}
+
+.mdl-button--raised{
+    background:var(--button-color__primary);
+}
+
+.mdl-dialog__actions{
+    display:flex;
+    justify-content:flex-end;
+    flex-direction:row;
+}
+
+.mdl-dialog__actions button{
+    margin-right:5px;
+    margin-left:5px;
 }

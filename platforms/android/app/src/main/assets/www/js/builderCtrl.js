@@ -1,57 +1,18 @@
-// function openDatabase() {
-// 	function successcb() {
-// 		console.log('Database opened successfully');
-// 	}
-
-// 	function errorcb(error) {
-// 		console.log('failed to open databae' + JSON.stringify(error));
-// 	}
-
-// 	var dbObj = window.sqlitePlugin.openDatabase({
-// 		name: 'formDb.db',
-// 		location: 'default'
-// 	}, successcb, errorcb);
-// 	dbObj.transaction(function (tx) {
-// 		tx.executeSql('CREATE TABLE IF NOT EXISTS controlDefinitions (Name text primary key, Type text)', [], function () {
-// 			console.log('Table created successfully');
-// 		}, function (error) {
-// 			console.log('Failed to create table', JSON.stringify(error));
-// 		});
-// 	});
-// 	return dbObj;
-// }
-
-// function insertToDb(ctrlName, ctrlType, dbObj, cb) {
-// 	dbObj.transaction(function (tx) {
-// 		tx.executeSql('INSERT INTO controlDefinitions VALUES (?1,?2)', [ctrlName, ctrlType]);
-// 	}, function (error) {
-// 		console.log('Transaction error:' + error.message);
-// 	}, function () {
-// 		console.log('Populated Database OK');
-// 		window.plugins.toast.show('Added to database successfully', 'short', 'bottom', function (a) {
-// 			console.log('toast success: ' + a);
-// 		}, function (b) {
-// 			alert('toast error: ' + b);
-// 		});
-// 		cb();
-// 	});
-// }
-
-// function readDb(dbObj, getArray) {
-// 	dbObj.transaction(function (tx) {
-// 		tx.executeSql('SELECT * FROM controlDefinitions', [], function (tx, results) {
-// 			getArray(results.rows);
-// 		}, function (error) {
-// 			console.log('Transaction error:' + error.message);
-// 		});
-// 	});
-// }
-
 formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, dbservice) {
 
-	var dbObj = dbservice.openDatabase();
-	// dbservice.openDatabase();
+	var mainDb = 'formDb.db';
+	var selectDb = 'selectDb.db';
+	var dialog = document.querySelector('dialog');
+	dialog.querySelector('.close').addEventListener('click', function () {
+		dialog.close();
+	});
+
+	var dbObj = dbservice.openDatabase(mainDb);
 	var dbDataArray = [];
+	$scope.isSelect = false;
+	$scope.newOptions = [];
+
+	//callback after read operation
 	var getArray = function (resultsrows) {
 		dbDataArray = [];
 		var length = resultsrows.length;
@@ -63,12 +24,41 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		console.log($scope.dbData);
 	};
 
+	var getSelectArray = function (resultsrows) {
+		dbSelectArray = [];
+		var length = resultsrows.length;
+
+	};
+
 	dbservice.readDb(dbObj, getArray);
 
 	$scope.submitToFormView = function () {
-		dbservice.insertToDb($scope.ctrlName, $scope.data.singleSelect, dbObj, function () {
-			dbservice.readDb(dbObj, getArray);
-		});
+		if ($scope.data.singleSelect == 'select') {
+			document.getElementById('add-select-options').showModal();
+		}
+		// dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, dbObj, function () {
+		// 	dbservice.readDb(dbObj, getArray);
+		// });
+		else {
+			dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, dbObj, function () {
+				dbservice.readDb(dbObj, getArray);
+			});
+		}
+	};
+
+	$scope.addSelectOptions = function () {
+		console.log('add new table here for select options');
+		$scope.newOptions.push($scope.data.newSelect);
+	};
+
+	$scope.saveSelectOptions = function () {
+		console.log('select table saved');
+		// selectObj = dbservice.openDatabase(selectDb);
+		// dbservice.readDb(selectObj, getSelectArray);
+	};
+
+	$scope.cancelSelectOptions = function () {
+		$scope.newOptions = [];
 	};
 }]);
 

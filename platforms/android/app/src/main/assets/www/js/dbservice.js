@@ -1,5 +1,5 @@
 formbuilder.service('dbservice', [function () {
-	this.openDatabase = function () {
+	this.openDatabase = function (dbname) {
 		function successcb() {
 			console.log('Database opened successfully');
 		}
@@ -12,13 +12,25 @@ formbuilder.service('dbservice', [function () {
 			name: 'formDb.db',
 			location: 'default'
 		}, successcb, errorcb);
-		dbObj.transaction(function (tx) {
-			tx.executeSql('CREATE TABLE IF NOT EXISTS controlDefinitions (Name text primary key, Type text)', [], function () {
-				console.log('Table created successfully');
-			}, function (error) {
-				console.log('Failed to create table', JSON.stringify(error));
+		if (dbname == 'formDb.db') {
+			dbObj.transaction(function (tx) {
+				tx.executeSql('CREATE TABLE IF NOT EXISTS controlDefinitions (Name TEXT PRIMARY KEY, Type TEXT)', [], function () {
+					console.log('Table created successfully');
+				}, function (error) {
+					console.log('Failed to create table', JSON.stringify(error));
+				});
 			});
-		});
+		}
+		else {
+			dbObj.transaction(function (tx) {
+				tx.executeSql('CREATE TABLE IF NOT EXISTS controlDefinitions (FOREIGN KEY(Name) REFERENCES controlDefinitions, Selectproperties TEXT)', [], function () {
+					console.log('Table created successfully');
+				}, function (error) {
+					console.log('Failed to create table', JSON.stringify(error));
+				});
+			});
+		}
+
 		return dbObj;
 	};
 

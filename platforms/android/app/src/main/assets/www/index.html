@@ -9,9 +9,9 @@
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
 
     <!-- materialize css -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
 
     <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/material.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 
     <script src="js/lib/angular.js"></script>
@@ -20,23 +20,8 @@
 </head>
 
 <body>
-    <header>
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">Builder</a>
-                <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a ui-sref="formbuilder">Builder</a></li>
-                    <li><a ui-sref="formviewer">View</a></li>
-                </ul>
-            </div>
-        </nav>
 
-        <ul class="sidenav" id="mobile">
-            <li><a ui-sref="formbuilder">Builder</a></li>
-            <li><a ui-sref="formviewer">View</a></li>
-        </ul>
-    </header>
+    <div ng-include="'views/header.html'"></div>
 
     <div class="view-wrapper" ui-view="">
     </div>
@@ -46,6 +31,7 @@
     <script src="js/dbservice.js"></script>
     <script src="js/builderCtrl.js"></script>
     <script src="js/lib/materialize.min.js"></script>
+    <script src="js/lib/material.min.js"></script>
 </body>
 
 </html>
