@@ -1,13 +1,13 @@
 formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, dbservice) {
 
-	var mainDb = 'formDb.db';
-	var selectDb = 'selectDb.db';
+	var mainTable = 'controlDefinitions';
+	// var selectTable = 'selectDefinitions';
 	var dialog = document.querySelector('dialog');
 	dialog.querySelector('.close').addEventListener('click', function () {
 		dialog.close();
 	});
 
-	var dbObj = dbservice.openDatabase(mainDb);
+	var dbObj = dbservice.openDatabase(mainTable);
 	var dbDataArray = [];
 	$scope.isSelect = false;
 	$scope.newOptions = [];
@@ -19,16 +19,23 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		var i = 0;
 		for (i; i < length; i++) {
 			dbDataArray.push(resultsrows.item(i));
+			// if (dbDataArray(i).Type == "select") {
+			// 	dbDataArray(i).SelectValues = dbDataArray(i).SelectValues.split(",");
+			// }
 		}
+
+		dbDataArray.forEach(function (element) {
+			if (element.Type == "select") {
+				element.SelectValues = element.SelectValues.split(',');
+			}
+		});
 		$scope.dbData = dbDataArray;
 		console.log($scope.dbData);
 	};
 
-	var getSelectArray = function (resultsrows) {
-		dbSelectArray = [];
-		var length = resultsrows.length;
-
-	};
+	// var getSelectArray = function (resultsrows) {
+	// 	console.log('selectArray entered');
+	// };
 
 	dbservice.readDb(dbObj, getArray);
 
@@ -40,9 +47,12 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		// 	dbservice.readDb(dbObj, getArray);
 		// });
 		else {
-			dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, 'controlDefinitions', dbObj, function () {
+			dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, null, mainTable, dbObj, function () {
 				dbservice.readDb(dbObj, getArray);
 			});
+			var elems = document.querySelectorAll('select');
+			var instances = M.FormSelect.init(elems);
+
 		}
 	};
 
@@ -52,9 +62,11 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 	};
 
 	$scope.saveSelectOptions = function () {
-		console.log('select table saved');
-		// selectObj = dbservice.openDatabase(selectDb);
-		// dbservice.readDb(selectObj, getSelectArray);
+		// selectObj = dbservice.openDatabase(selectTable);
+		var selectString = $scope.newOptions.join();
+		dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, selectString, mainTable, dbObj, function () {
+			dbservice.readDb(dbObj, getSelectArray);
+		});
 	};
 
 	$scope.cancelSelectOptions = function () {

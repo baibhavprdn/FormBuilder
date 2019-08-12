@@ -17,30 +17,39 @@
 			<label for="singleSelect">Controller Type</label>
 		</div>
 		<dialog class="mdl-dialog" id="add-select-options">
-			<h5 class="mdl-dialog__title">Add Select Options</h5>
+			<div class="mdl-dialog__custom-header">
+				<h5>Add Select Options</h5>
+			</div>
 			<div class="mdl-dialog__content">
 
 				<div class="selectlist-options">
 					<ul class="demo-list-item mdl-list">
 						<li class="mdl-list__item" ng-repeat="selectoption in newOptions">
 							<span class="mdl-list__item-primary-content">
-								{{newOption}}
+								{{selectoption}}
 							</span>
 						</li>
 					</ul>
 				</div>
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<!-- <div class="mdl-textfield mdl-js-textfield">
 					<input class="mdl-textfield__input" type="text" id="selectOptionInput" ng-model="data.newSelect">
 					<label class="mdl-textfield__label" for="selectOptionInput">Select Option</label>
+				</div> -->
+				<div class="input-field">
+					<input type="text" id="selectOptionInput" ng-model="data.newSelect">
+					<label for="selectOptionInput">Select Option</label>
 				</div>
-				<button type="button" class="mdl-button mdl-button-js mdl-button--raised" type="submit"
-					ng-click="addSelectOptions()">Add Select
-					Options</button>
+				<!-- <button type="button" class="mdl-button mdl-button-js mdl-button--raised waves-effect" type="submit"
+					ng-click="addSelectOptions()">Add Option</button> -->
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab waves-effect" type="submit"
+					ng-click="addSelectOptions()">
+					<i class="material-icons">add</i>
+				</button>
 			</div>
 			<div class="mdl-dialog__actions">
-				<button type="button" class="mdl-button mdl-button--raised close"
+				<button type="button" class="mdl-button mdl-button--raised close waves-effect action-button"
 					ng-click="saveSelectOptions()">Save</button>
-				<button type="button" class="mdl-button  mdl-button--raised close"
+				<button type="button" class="mdl-button  mdl-button--raised close waves-effect action-button"
 					ng-click="cancelSelectOptions()">Cancel</button>
 			</div>
 		</dialog>
@@ -52,6 +61,9 @@
 	<form id="viewBuilder" ng-show="generateViewBuilder" novalidate>
 		<div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
 			<textarea name="{{data.Name}}" id="{{data.Name}}" cols="30" rows="10" ng-switch-when="textarea"></textarea>
+			<select name="{{data.Name}}" id="{{data.Name}}" ng-switch-when="select">
+				<option value="{{options}}" ng-repeat="options in data.SelectValues">{{options}}</option>
+			</select>
 			<input id="{{data.Name}}" type="{{data.Type}}" class="validate" ng-switch-default>
 			<label for="{{data.Name}}">{{data.Name}}</label>
 		</div>

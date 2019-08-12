@@ -1,5 +1,5 @@
 formbuilder.service('dbservice', [function () {
-	this.openDatabase = function (dbname) {
+	this.openDatabase = function (tableName) {
 		function successcb() {
 			console.log('Database opened successfully');
 		}
@@ -9,28 +9,27 @@ formbuilder.service('dbservice', [function () {
 		}
 
 		var dbObj = window.sqlitePlugin.openDatabase({
-			name: 'formDb.db',
+			name: 'formBuilderDatabase.db',
 			location: 'default'
 		}, successcb, errorcb);
-		if (dbname == 'formDb.db') {
-			dbObj.transaction(function (tx) {
-				tx.executeSql('CREATE TABLE IF NOT EXISTS controlDefinitions (Name TEXT PRIMARY KEY, Type TEXT)', [], function () {
-					console.log('Table created successfully');
-				}, function (error) {
-					console.log('Failed to create table', JSON.stringify(error));
-				});
+		// if (dbname == 'formDb.db') {
+		dbObj.transaction(function (tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS controlDefinitions (Name TEXT PRIMARY KEY, Type TEXT,SelectValues TEXT)', function (error) {
+				console.log('Failed to create table', JSON.stringify(error));
+			}, function () {
+				console.log('Table created successfully');
 			});
-		}
-		else {
-			dbObj.transaction(function (tx) {
-				tx.executeSql('CREATE TABLE IF NOT EXISTS controlDefinitions (FOREIGN KEY(Name) REFERENCES controlDefinitions, Selectproperties TEXT)', [], function () {
-					console.log('Table created successfully');
-				}, function (error) {
-					console.log('Failed to create table', JSON.stringify(error));
-				});
-			});
-		}
-
+		});
+		// }
+		// else {
+		// 	dbObj.transaction(function (tx) {
+		// 		tx.executeSql('CREATE TABLE IF NOT EXISTS selectDefinitions (FOREIGN KEY(Name) REFERENCES controlDefinitions (Name), Selectproperties TEXT)', function (error) {
+		// 			console.log('Failed to create table', JSON.stringify(error));
+		// 		}, function () {
+		// 			console.log('Table created successfully');
+		// 		});
+		// 	});
+		// }
 		return dbObj;
 	};
 
@@ -44,9 +43,11 @@ formbuilder.service('dbservice', [function () {
 		});
 	};
 
-	this.insertToDb = function (ctrlName, ctrlType, dbObj, cb) {
+	this.insertToDb = function (value1, value2, value3, tableName, dbObj, cb) {
+		// if (tableName == 'controlDefinitions') {
+
 		dbObj.transaction(function (tx) {
-			tx.executeSql('INSERT INTO controlDefinitions VALUES (?1,?2)', [ctrlName, ctrlType]);
+			tx.executeSql('INSERT INTO controlDefinitions VALUES (?1,?2,?3)', [value1, value2, value3]);
 		}, function (error) {
 			console.log('Transaction error:' + error.message);
 		}, function () {
@@ -58,5 +59,19 @@ formbuilder.service('dbservice', [function () {
 			});
 			cb();
 		});
+		// }
+		// dbObj.transaction(function (tx) {
+		// 	tx.executeSql('INSERT INTO selectDefinitions VALUES (?1,?2)', [value1, value2]);
+		// }, function (error) {
+		// 	console.log('Transaction error:' + error.message);
+		// }, function () {
+		// 	console.log('Populated Database OK');
+		// 	window.plugins.toast.show('Added to database successfully', 'short', 'bottom', function (a) {
+		// 		console.log('toast success: ' + a);
+		// 	}, function (b) {
+		// 		alert('toast error: ' + b);
+		// 	});
+		// 	cb();
+		// });
 	};
 }]);

@@ -55,10 +55,33 @@ body {
 }
 
 .mdl-button--raised{
-    background:var(--button-color__primary);
+    background:var(--button-color__primary) !important;
+    color:#fff;
 }
 
+.mdl-dialog{
+    width:85%;
+    padding:0;
+}
+
+.mdl-dialog h5{
+    text-align: center;
+    margin:0;
+}
+
+.mdl-dialog__custom-header{
+    padding:15px;
+    border-bottom:1px solid #ddd;
+}
+
+.mdl-dialog__content{
+    padding:15px;
+    border-bottom:1px solid #ddd;
+}
+
+
 .mdl-dialog__actions{
+    padding:15px;
     display:flex;
     justify-content:flex-end;
     flex-direction:row;
@@ -67,4 +90,28 @@ body {
 .mdl-dialog__actions button{
     margin-right:5px;
     margin-left:5px;
+}
+
+.waves-effect{
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    -webkit-transition: .3s ease-out;
+    transition: .3s ease-out;
+}
+
+.action-button{
+    width:6rem;
+}
+
+.mdl-list__item{
+    border-bottom:1px solid #ddd;
 }
