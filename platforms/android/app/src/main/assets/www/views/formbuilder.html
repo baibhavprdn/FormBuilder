@@ -16,12 +16,13 @@
 			</select>
 			<label for="singleSelect">Controller Type</label>
 		</div>
+
+
 		<dialog class="mdl-dialog" id="add-select-options">
 			<div class="mdl-dialog__custom-header">
 				<h5>Add Select Options</h5>
 			</div>
 			<div class="mdl-dialog__content">
-
 				<div class="selectlist-options">
 					<ul class="demo-list-item mdl-list">
 						<li class="mdl-list__item" ng-repeat="selectoption in newOptions">
@@ -31,25 +32,21 @@
 						</li>
 					</ul>
 				</div>
-				<!-- <div class="mdl-textfield mdl-js-textfield">
-					<input class="mdl-textfield__input" type="text" id="selectOptionInput" ng-model="data.newSelect">
-					<label class="mdl-textfield__label" for="selectOptionInput">Select Option</label>
-				</div> -->
-				<div class="input-field">
-					<input type="text" id="selectOptionInput" ng-model="data.newSelect">
-					<label for="selectOptionInput">Select Option</label>
+				<div class="select-modal-wrapper">
+					<div class="input-field">
+						<input type="text" id="selectOptionInput" ng-model="data.newSelect">
+						<label for="selectOptionInput">Select Option</label>
+					</div>
+					<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab waves-effect" type="submit"
+						ng-click="addSelectOptions()">
+						<i class="material-icons">add</i>
+					</button>
 				</div>
-				<!-- <button type="button" class="mdl-button mdl-button-js mdl-button--raised waves-effect" type="submit"
-					ng-click="addSelectOptions()">Add Option</button> -->
-				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab waves-effect" type="submit"
-					ng-click="addSelectOptions()">
-					<i class="material-icons">add</i>
-				</button>
 			</div>
 			<div class="mdl-dialog__actions">
 				<button type="button" class="mdl-button mdl-button--raised close waves-effect action-button"
 					ng-click="saveSelectOptions()">Save</button>
-				<button type="button" class="mdl-button  mdl-button--raised close waves-effect action-button"
+				<button type="button" class="mdl-button  mdl-button--raised waves-effect action-button"
 					ng-click="cancelSelectOptions()">Cancel</button>
 			</div>
 		</dialog>

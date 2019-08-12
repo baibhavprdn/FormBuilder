@@ -115,3 +115,7 @@ body {
 .mdl-list__item{
     border-bottom:1px solid #ddd;
 }
+
+.select-modal-wrapper{
+    display:flex;
+}
