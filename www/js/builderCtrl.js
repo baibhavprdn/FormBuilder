@@ -57,7 +57,6 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		});
 
 		$scope.newOptions = [];
-
 	};
 
 	$scope.cancelSelectOptions = function () {
