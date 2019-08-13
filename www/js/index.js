@@ -5,7 +5,10 @@ function onDeviceReady() {
 
 document.addEventListener('deviceready', onDeviceReady, false);
 var formbuilder = angular.module('formbuilder', ['ui.router']);
-var elems = document.querySelectorAll('select');
+function initializeSelect() {
+   var elems = document.querySelectorAll('select');
+   var instances = M.FormSelect.init(elems);
+}
 
 formbuilder.run(['$transitions', function ($transitions) {
    $transitions.onSuccess({ to: '**' }, function () {

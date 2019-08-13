@@ -1,68 +1,76 @@
 <div class="view-wrapper">
-	<form id="controlBuilder" name="controlbuilder" ng-submit="submitToFormView()" novalidate>
-		<div class="input-field">
-			<input id="controllerName" type="text" ng-model="data.ctrlName" class="validate">
-			<label for="controllerName">Controller Name</label>
-		</div>
-		<div class="input-field">
-			<select name="singleSelect" id="singleSelect" ng-model="data.singleSelect">
-				<option value="" disabled selected>Choose your option</option>
-				<option value="text">Text</option>
-				<option value="textarea">TextArea</option>
-				<option value="password">Password</option>
-				<option value="email">Email</option>
-				<option value="number">Number</option>
-				<option value="select">Select</option>
-			</select>
-			<label for="singleSelect">Controller Type</label>
-		</div>
-
-
-		<dialog class="mdl-dialog" id="add-select-options">
-			<div class="mdl-dialog__custom-header">
-				<h5>Add Select Options</h5>
+	<div class="main-section">
+		<form id="controlBuilder" name="controlbuilder" ng-submit="submitToFormView()" novalidate>
+			<div class="input-field">
+				<input id="controllerName" type="text" ng-model="data.ctrlName" class="validate" ng-required="true">
+				<label for="controllerName">Controller Name</label>
 			</div>
-			<div class="mdl-dialog__content">
-				<div class="selectlist-options">
-					<ul class="demo-list-item mdl-list">
-						<li class="mdl-list__item" ng-repeat="selectoption in newOptions">
-							<span class="mdl-list__item-primary-content">
-								{{selectoption}}
-							</span>
-						</li>
-					</ul>
+			<div class="input-field">
+				<select name="singleSelect" id="singleSelect" ng-model="data.singleSelect" ng-required="true">
+					<option value="" disabled selected>Choose your option</option>
+					<option value="text">Text</option>
+					<option value="textarea">TextArea</option>
+					<option value="password">Password</option>
+					<option value="email">Email</option>
+					<option value="number">Number</option>
+					<option value="select">Select</option>
+				</select>
+				<label for="singleSelect">Controller Type</label>
+			</div>
+
+			<dialog class="mdl-dialog" id="add-select-options">
+				<div class="mdl-dialog__custom-header">
+					<h5>Add Select Options</h5>
 				</div>
-				<div class="select-modal-wrapper">
-					<div class="input-field">
-						<input type="text" id="selectOptionInput" ng-model="data.newSelect">
-						<label for="selectOptionInput">Select Option</label>
+				<div class="mdl-dialog__content">
+					<div class="selectlist-options">
+						<ul class="demo-list-item mdl-list">
+							<li class="mdl-list__item" ng-repeat="selectoption in newOptions">
+								<span class="mdl-list__item-primary-content">
+									{{selectoption}}
+								</span>
+							</li>
+						</ul>
 					</div>
-					<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab waves-effect" type="submit"
-						ng-click="addSelectOptions()">
-						<i class="material-icons">add</i>
-					</button>
+					<div class="select-modal-wrapper">
+						<div class="input-field">
+							<input type="text" id="selectOptionInput" ng-model="data.newSelect">
+							<label for="selectOptionInput">Select Option</label>
+						</div>
+						<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab waves-effect"
+							type="submit" ng-click="addSelectOptions()">
+							<i class="material-icons">add</i>
+						</button>
+					</div>
 				</div>
-			</div>
-			<div class="mdl-dialog__actions">
-				<button type="button" class="mdl-button mdl-button--raised close waves-effect action-button"
-					ng-click="saveSelectOptions()">Save</button>
-				<button type="button" class="mdl-button  mdl-button--raised waves-effect action-button"
-					ng-click="cancelSelectOptions()">Cancel</button>
-			</div>
-		</dialog>
+				<div class="mdl-dialog__actions">
+					<button type="button" class="mdl-button mdl-button--raised close waves-effect action-button"
+						ng-click="saveSelectOptions()">Save</button>
+					<button type="button" class="mdl-button  mdl-button--raised waves-effect action-button"
+						ng-click="cancelSelectOptions()">Cancel</button>
+				</div>
+			</dialog>
 
-		<button type="submit" class="btn waves-effect" ng-click="generateViewBuilder=true">Add to Form View</button>
-		<button class="btn waves-effect" type="button" ng-click="generateViewBuilder=false">Clear Form View</button>
-	</form>
-
-	<form id="viewBuilder" ng-show="generateViewBuilder" novalidate>
-		<div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
-			<textarea name="{{data.Name}}" id="{{data.Name}}" cols="30" rows="10" ng-switch-when="textarea"></textarea>
-			<select name="{{data.Name}}" id="{{data.Name}}" ng-switch-when="select">
-				<option value="{{options}}" ng-repeat="options in data.SelectValues">{{options}}</option>
-			</select>
-			<input id="{{data.Name}}" type="{{data.Type}}" class="validate" ng-switch-default>
-			<label for="{{data.Name}}">{{data.Name}}</label>
+			<button type="submit" class="btn waves-effect">Add to Form View</button>
+			<button class="btn waves-effect" type="button" ng-click="generateViewBuilder=false">Clear Form View</button>
+		</form>
+		<div class="button-container">
+			<button class="btn waves-effect delete-database" type="button" ng-click="clearDatabase()">Delete All
+				Records</button>
 		</div>
-	</form>
+
+		<form id="viewBuilder" ng-show="generateViewBuilder" ng-submit="submitForm()" novalidate>
+			<div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
+				<textarea name="{{data.Name}}" id="{{data.Name}}" cols="30" rows="10" ng-switch-when="textarea"></textarea>
+				<select name="{{data.Name}}" id="{{data.Name}}" ng-switch-when="select">
+					<option value="{{options}}" ng-repeat="options in data.SelectValues">{{options}}</option>
+				</select>
+				<input id="{{data.Name}}" type="{{data.Type}}" class="validate" ng-switch-default>
+				<label for="{{data.Name}}">{{data.Name}}</label>
+			</div>
+			<button class="btn waves effect" type="submit">Submit</button>
+		</form>
+	</div>
+
+
 </div>

@@ -48,4 +48,20 @@ formbuilder.service('dbservice', [function () {
 			cb();
 		});
 	};
+
+	this.clearDatabase = function (dbObj, cb) {
+		dbObj.transaction(function (tx) {
+			var queryDropTable = 'DROP TABLE IF EXISTS controlDefinitions';
+			tx.executeSql(queryDropTable, [], function (tx, res) {
+				console.log('Database deleted successfully');
+				window.plugins.toast.show('Database Deleted', 'short', 'bottom', function (a) {
+					console.log('toast success: ' + a);
+				}, function (b) {
+					alert('toast error: ' + b);
+				});
+			}, function (tx, error) {
+				console.log('DELETE error:' + error.message);
+			});
+		});
+	};
 }]);
