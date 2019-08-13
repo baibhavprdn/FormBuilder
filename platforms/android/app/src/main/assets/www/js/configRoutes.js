@@ -8,7 +8,7 @@ function configRoutes($stateProvider, $urlRouterProvider) {
 		.state('formviewer', {
 			url: '/formviewer',
 			templateUrl: 'views/formviewer.html',
-			controller: 'BuilderCtrl'
+			controller: 'ViewerCtrl'
 		});
 	$urlRouterProvider.otherwise('/formbuilder');
 }

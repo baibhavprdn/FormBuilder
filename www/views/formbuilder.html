@@ -25,7 +25,7 @@
 				<div class="mdl-dialog__content">
 					<div class="selectlist-options">
 						<ul class="demo-list-item mdl-list">
-							<li class="mdl-list__item" ng-repeat="selectoption in newOptions">
+							<li class="mdl-list__item" ng-repeat="selectoption in newOptions track by $index">
 								<span class="mdl-list__item-primary-content">
 									{{selectoption}}
 								</span>
@@ -38,7 +38,7 @@
 							<label for="selectOptionInput">Select Option</label>
 						</div>
 						<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab waves-effect"
-							type="submit" ng-click="addSelectOptions()">
+							type="button" ng-click="addSelectOptions()">
 							<i class="material-icons">add</i>
 						</button>
 					</div>
@@ -59,9 +59,12 @@
 				Records</button>
 		</div>
 
-		<form id="viewBuilder" ng-show="generateViewBuilder" ng-submit="submitForm()" novalidate>
+		<form id="viewBuilder" ng-if="generateViewBuilder==true" ng-submit="submitForm()" class="animate-show-hide"
+			novalidate>
+
 			<div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
-				<textarea name="{{data.Name}}" id="{{data.Name}}" cols="30" rows="10" ng-switch-when="textarea"></textarea>
+				<textarea name="{{data.Name}}" id="{{data.Name}}" cols="30" rows="10" ng-switch-when="textarea"
+					class="materialize-textarea"></textarea>
 				<select name="{{data.Name}}" id="{{data.Name}}" ng-switch-when="select">
 					<option value="{{options}}" ng-repeat="options in data.SelectValues">{{options}}</option>
 				</select>
@@ -71,6 +74,4 @@
 			<button class="btn waves effect" type="submit">Submit</button>
 		</form>
 	</div>
-
-
 </div>

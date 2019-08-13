@@ -1,7 +1,6 @@
 formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, dbservice) {
 
 	var mainTable = 'controlDefinitions';
-	// var selectTable = 'selectDefinitions';
 	var dialog = document.querySelector('dialog');
 	dialog.querySelector('.close').addEventListener('click', function () {
 		dialog.close();
@@ -29,11 +28,10 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		$scope.dbData = dbDataArray;
 		console.log($scope.dbData);
 		$scope.generateViewBuilder = true;
-		// initializeSelect();
-
+		initializeSelect();
 	};
 
-	// dbservice.readDb(dbObj, getArray);
+	dbservice.readDb(dbObj, getArray);
 
 	$scope.submitToFormView = function () {
 		if ($scope.data.singleSelect == 'select') {
@@ -42,7 +40,7 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		else {
 			dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, null, mainTable, dbObj, function () {
 				dbservice.readDb(dbObj, getArray);
-				// initializeSelect();
+				initializeSelect();
 			});
 		}
 	};

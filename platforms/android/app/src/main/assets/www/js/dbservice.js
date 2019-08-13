@@ -54,7 +54,7 @@ formbuilder.service('dbservice', [function () {
 			var queryDropTable = 'DROP TABLE IF EXISTS controlDefinitions';
 			tx.executeSql(queryDropTable, [], function (tx, res) {
 				console.log('Database deleted successfully');
-				window.plugins.toast.show('Database Deleted', 'short', 'bottom', function (a) {
+				window.plugins.toast.show('Form deleted', 'short', 'bottom', function (a) {
 					console.log('toast success: ' + a);
 				}, function (b) {
 					alert('toast error: ' + b);
