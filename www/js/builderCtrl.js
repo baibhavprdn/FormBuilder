@@ -8,8 +8,8 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 
 	var dbObj = dbservice.openDatabase(mainTable);
 	var dbDataArray = [];
-	$scope.isSelect = false;
 	$scope.newOptions = [];
+	$scope.generateViewBuilder = true;
 
 	//callback after read operation
 	var getArray = function (resultsrows) {
@@ -25,9 +25,13 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 				element.SelectValues = element.SelectValues.split(',');
 			}
 		});
-		$scope.dbData = dbDataArray;
+
+		//manually update view after changes in $scope
+		$scope.$apply(function () {
+			$scope.generateViewBuilder = true;
+			$scope.dbData = dbDataArray;
+		});
 		console.log($scope.dbData);
-		$scope.generateViewBuilder = true;
 		initializeSelect();
 	};
 
@@ -53,7 +57,6 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		var selectString = $scope.newOptions.join();
 		dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, selectString, mainTable, dbObj, function () {
 			dbservice.readDb(dbObj, getArray);
-			// initializeSelect();
 		});
 
 		$scope.newOptions = [];

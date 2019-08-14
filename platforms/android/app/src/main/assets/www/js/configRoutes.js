@@ -4,6 +4,16 @@ function configRoutes($stateProvider, $urlRouterProvider) {
 			url: '/formbuilder',
 			templateUrl: 'views/formbuilder.html',
 			controller: 'BuilderCtrl'
+			// views: {
+			// 	'formbuilder': {
+			// 		templateUrl: 'views/formbuilder.html',
+			// 		controller: 'BuilderCtrl'
+			// 	},
+			// 	'formviewer': {
+			// 		templateUrl: 'views/formviewer.html',
+			// 		controller: 'ViewerCtrl'
+			// 	}
+			// }
 		})
 		.state('formviewer', {
 			url: '/formviewer',

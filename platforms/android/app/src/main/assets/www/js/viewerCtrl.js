@@ -17,9 +17,11 @@ formbuilder.controller('ViewerCtrl', ['$scope', 'dbservice', function ($scope, d
 				element.SelectValues = element.SelectValues.split(',');
 			}
 		});
-		$scope.dbData = dbDataArray;
+		$scope.$apply(function () {
+			$scope.generateViewBuilder = true;
+			$scope.dbData = dbDataArray;
+		});
 		console.log($scope.dbData);
-		$scope.generateViewBuilder = true;
 		initializeSelect();
 	};
 
