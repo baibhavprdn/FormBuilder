@@ -137,8 +137,8 @@ body {
 }
 
 #viewBuilder .input-field >*{
-    margin-top:3px;
-    margin-bottom:3px;
+    margin-top:5px;
+    margin-bottom:5px;
 }
 
 .animate-show-hide.ng-hide {

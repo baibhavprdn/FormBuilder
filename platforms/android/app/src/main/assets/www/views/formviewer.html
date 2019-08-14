@@ -1,4 +1,4 @@
-<form id="viewBuilder" ng-submit="submitForm()" novalidate>
+<form id="viewBuilder" ng-if="generateViewBuilder==true" ng-submit="submitForm()" novalidate>
 	<div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
 		<textarea name="{{data.Name}}" id="{{data.Name}}" cols="30" rows="10" ng-switch-when="textarea"></textarea>
 		<select name="{{data.Name}}" id="{{data.Name}}" ng-switch-when="select">

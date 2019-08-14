@@ -1,4 +1,4 @@
-formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, dbservice) {
+formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', '$state', function ($scope, dbservice, $state) {
 
 	var mainTable = 'controlDefinitions';
 	var dialog = document.querySelector('dialog');
@@ -9,33 +9,32 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 	var dbObj = dbservice.openDatabase(mainTable);
 	var dbDataArray = [];
 	$scope.newOptions = [];
-	$scope.generateViewBuilder = true;
 
 	//callback after read operation
-	var getArray = function (resultsrows) {
-		dbDataArray = [];
-		var length = resultsrows.length;
-		var i = 0;
-		for (i; i < length; i++) {
-			dbDataArray.push(resultsrows.item(i));
-		}
+	// var getArray = function (resultsrows) {
+	// 	dbDataArray = [];
+	// 	var length = resultsrows.length;
+	// 	var i = 0;
+	// 	for (i; i < length; i++) {
+	// 		dbDataArray.push(resultsrows.item(i));
+	// 	}
 
-		dbDataArray.forEach(function (element) {
-			if (element.Type == "select") {
-				element.SelectValues = element.SelectValues.split(',');
-			}
-		});
+	// 	dbDataArray.forEach(function (element) {
+	// 		if (element.Type == "select") {
+	// 			element.SelectValues = element.SelectValues.split(',');
+	// 		}
+	// 	});
 
-		//manually update view after changes in $scope
-		$scope.$apply(function () {
-			$scope.generateViewBuilder = true;
-			$scope.dbData = dbDataArray;
-		});
-		console.log($scope.dbData);
-		initializeSelect();
-	};
+	// 	//manually update view after changes in $scope
+	// 	$scope.$apply(function () {
+	// 		$scope.generateViewBuilder = true;
+	// 		$scope.dbData = dbDataArray;
+	// 	});
+	// 	console.log($scope.dbData);
+	// 	initializeSelect();
+	// };
 
-	dbservice.readDb(dbObj, getArray);
+	// dbservice.readDb(dbObj, getArray);
 
 	$scope.submitToFormView = function () {
 		if ($scope.data.singleSelect == 'select') {
@@ -43,8 +42,10 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		}
 		else {
 			dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, null, mainTable, dbObj, function () {
-				dbservice.readDb(dbObj, getArray);
+				// dbservice.readDb(dbObj, getArray);
 				initializeSelect();
+				$state.go('home.formviewer', { 'show': true }, { reload: true });
+				// $state.reload();
 			});
 		}
 	};
@@ -56,7 +57,8 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 	$scope.saveSelectOptions = function () {
 		var selectString = $scope.newOptions.join();
 		dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, selectString, mainTable, dbObj, function () {
-			dbservice.readDb(dbObj, getArray);
+			$state.go('home.formviewer', { 'show': true }, { reload: true });
+			// $state.reload();
 		});
 
 		$scope.newOptions = [];
@@ -67,11 +69,20 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', function ($scope, 
 		document.querySelector('dialog').close();
 	};
 
+	$scope.hideViewBuilder = function () {
+		$state.go('home.formviewer', { 'show': false }, { reload: true });
+	}
+
 	$scope.clearDatabase = function () {
 		dbservice.clearDatabase(dbObj);
 		dbservice.openDatabase(dbObj);
 		$scope.dbData = [];
-		$scope.generateViewBuilder = false;
+
+		var stateParams = {
+			'show': false
+		};
+
+		$state.go('home.formviewer', stateParams, { reload: true });
 	};
 
 	$scope.submitForm = function () {

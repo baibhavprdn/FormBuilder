@@ -1,4 +1,4 @@
-formbuilder.controller('ViewerCtrl', ['$scope', 'dbservice', function ($scope, dbservice) {
+formbuilder.controller('ViewerCtrl', ['$scope', 'dbservice', '$state', '$stateParams', function ($scope, dbservice, $state, $stateParams) {
 	console.log('entered viewctrl');
 
 	var mainTable = 'controlDefinitions';
@@ -20,10 +20,14 @@ formbuilder.controller('ViewerCtrl', ['$scope', 'dbservice', function ($scope, d
 		$scope.$apply(function () {
 			$scope.generateViewBuilder = true;
 			$scope.dbData = dbDataArray;
+			if ($stateParams.show == false) {
+				$scope.generateViewBuilder = false;
+			}
 		});
 		console.log($scope.dbData);
 		initializeSelect();
 	};
 
 	dbservice.readDb(dbObj, getArray);
+
 }]);

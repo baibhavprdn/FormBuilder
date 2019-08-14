@@ -1,26 +1,25 @@
 function configRoutes($stateProvider, $urlRouterProvider) {
 	$stateProvider
-		.state('formbuilder', {
-			url: '/formbuilder',
+		.state('home', {
+			url: '/home',
 			templateUrl: 'views/formbuilder.html',
 			controller: 'BuilderCtrl'
-			// views: {
-			// 	'formbuilder': {
-			// 		templateUrl: 'views/formbuilder.html',
-			// 		controller: 'BuilderCtrl'
-			// 	},
-			// 	'formviewer': {
-			// 		templateUrl: 'views/formviewer.html',
-			// 		controller: 'ViewerCtrl'
-			// 	}
-			// }
 		})
-		.state('formviewer', {
+		.state('home.formviewer', {
 			url: '/formviewer',
 			templateUrl: 'views/formviewer.html',
+			controller: 'ViewerCtrl',
+			params: {
+				'show': true
+			}
+		})
+		.state('generateform', {
+			url: '/generateform',
+			templateUrl: 'views/formviewer.html',
 			controller: 'ViewerCtrl'
-		});
-	$urlRouterProvider.otherwise('/formbuilder');
+		})
+		;
+	$urlRouterProvider.otherwise('/home');
 }
 
 formbuilder.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
