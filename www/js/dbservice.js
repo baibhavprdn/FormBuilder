@@ -1,11 +1,11 @@
 formbuilder.service('dbservice', [function () {
 	this.openDatabase = function (tableName) {
 		function successcb() {
-			console.log('Database opened successfully');
+			console.log('openDatabase:Database opened successfully');
 		}
 
 		function errorcb(error) {
-			console.log('failed to open databae' + JSON.stringify(error));
+			console.log('failed to open database' + JSON.stringify(error));
 		}
 
 		var dbObj = window.sqlitePlugin.openDatabase({
@@ -16,7 +16,7 @@ formbuilder.service('dbservice', [function () {
 			tx.executeSql('CREATE TABLE IF NOT EXISTS controlDefinitions (Name TEXT PRIMARY KEY, Type TEXT,SelectValues TEXT)', function (error) {
 				console.log('Failed to create table', JSON.stringify(error));
 			}, function () {
-				console.log('Table created successfully');
+				console.log('openDatabase: Table created successfully');
 			});
 		});
 		return dbObj;
@@ -39,7 +39,7 @@ formbuilder.service('dbservice', [function () {
 		}, function (error) {
 			console.log('Transaction error:' + error.message);
 		}, function () {
-			console.log('Populated Database OK');
+			console.log('insertToDb: Populated Database OK');
 			window.plugins.toast.show('Added to database successfully', 'short', 'bottom', function (a) {
 				console.log('toast success: ' + a);
 			}, function (b) {
@@ -55,9 +55,9 @@ formbuilder.service('dbservice', [function () {
 			tx.executeSql(queryDropTable, [], function (tx, res) {
 				console.log('Database deleted successfully');
 				window.plugins.toast.show('Form deleted', 'short', 'bottom', function (a) {
-					console.log('toast success: ' + a);
+					// console.log('toast success: ' + a);
 				}, function (b) {
-					alert('toast error: ' + b);
+					console.log('toast error: ' + b);
 				});
 			}, function (tx, error) {
 				console.log('DELETE error:' + error.message);

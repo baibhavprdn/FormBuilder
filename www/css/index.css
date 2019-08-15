@@ -54,6 +54,10 @@ body {
     }
 }
 
+nav .brand-logo{
+    font-size:1.5rem;
+}
+
 /* material dialog */
 
 .mdl-dialog__title,.mdl-dialog__content,.mdl-dialog__actions{
@@ -136,10 +140,6 @@ body {
     width:50%;
 }
 
-#viewBuilder .input-field >*{
-    margin-top:5px;
-    margin-bottom:5px;
-}
 
 .animate-show-hide.ng-hide {
   opacity: 0;
@@ -148,4 +148,35 @@ body {
 .animate-show-hide.ng-hide-add,
 .animate-show-hide.ng-hide-remove {
   transition: all linear 0.2s;
+}
+
+/* -------formviewer------- */
+
+/* #viewBuilder{
+    padding:2%;
+} */
+
+#viewBuilder .input-field >*{
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+#viewBuilder .input-field{
+    margin-top:0.5rem;
+    margin-bottom:0.5rem;
+}
+
+#viewBuilder input,select,textarea{
+    border:1px solid #ddd;
+    padding:2px;
+    width:98%;
+}
+
+#viewBuilder input:focus,select:focus,textarea:focus{
+    border:1px solid var(--button-color__primary);
+}
+
+#viewBuilder label{
+    position:relative;
+    color:#111;
 }

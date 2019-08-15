@@ -1,6 +1,4 @@
 formbuilder.controller('ViewerCtrl', ['$scope', 'dbservice', '$state', '$stateParams', function ($scope, dbservice, $state, $stateParams) {
-	console.log('entered viewctrl');
-
 	var mainTable = 'controlDefinitions';
 	var dbDataArray = [];
 	var dbObj = dbservice.openDatabase(mainTable);
@@ -17,6 +15,8 @@ formbuilder.controller('ViewerCtrl', ['$scope', 'dbservice', '$state', '$statePa
 				element.SelectValues = element.SelectValues.split(',');
 			}
 		});
+
+		//force change in view if scope changes
 		$scope.$apply(function () {
 			$scope.generateViewBuilder = true;
 			$scope.dbData = dbDataArray;
@@ -28,6 +28,18 @@ formbuilder.controller('ViewerCtrl', ['$scope', 'dbservice', '$state', '$statePa
 		initializeSelect();
 	};
 
-	dbservice.readDb(dbObj, getArray);
+	$scope.submitForm = function () {
+		console.log('form submitted');
+	};
 
+	dbservice.readDb(dbObj, getArray);
+	var selectOptions = document.querySelectorAll('.formviewer-select');
+	selectOptions.forEach(function (element) {
+		console.log('select option active, modal opened');
+	});
+	selectOptions.forEach(function (element) {
+		element.addEventListener('click', function () {
+			console.log('select element clicked; open modal');
+		});
+	});
 }]);

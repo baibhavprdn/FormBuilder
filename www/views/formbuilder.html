@@ -6,7 +6,8 @@
 				<label for="controllerName">Controller Name</label>
 			</div>
 			<div class="input-field">
-				<select name="singleSelect" id="singleSelect" ng-model="data.singleSelect" ng-required="true">
+				<select name="singleSelect" id="singleSelect" ng-model="data.singleSelect" class="validate"
+					ng-required="true">
 					<option value="" disabled selected>Choose your option</option>
 					<option value="text">Text</option>
 					<option value="textarea">TextArea</option>
@@ -23,7 +24,7 @@
 					<h5>Add Select Options</h5>
 				</div>
 				<div class="mdl-dialog__content">
-					<div class="selectlist-options">
+					<div class="selectlist-options" ng-show="selectoptionsExist">
 						<ul class="demo-list-item mdl-list">
 							<li class="mdl-list__item" ng-repeat="selectoption in newOptions track by $index">
 								<span class="mdl-list__item-primary-content">
@@ -55,8 +56,21 @@
 			<button class="btn waves-effect" type="button" ng-click="hideViewBuilder()">Clear Form View</button>
 		</form>
 		<div class="button-container">
-			<button class="btn waves-effect delete-database" type="button" ng-click="clearDatabase()">Delete All
+			<!-- Modal Trigger -->
+			<button class="btn waves-effect delete-database modal-trigger" data-target="confirmdelete" type="button">Delete
+				All
 				Records</button>
+			<!-- <a class="waves-effect waves-light btn modal-trigger" href="#confirmdelete">Modal</a> -->
+
+			<div id="confirmdelete" class="modal">
+				<div class="modal-content">
+					<p>Do you wish to delete the form generated up until now?</p>
+				</div>
+				<div class="modal-footer">
+					<a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+					<a class="modal-close waves-effect waves-green btn-flat" ng-click="clearDatabase()">Delete</a>
+				</div>
+			</div>
 		</div>
 		<div ui-view></div>
 	</div>

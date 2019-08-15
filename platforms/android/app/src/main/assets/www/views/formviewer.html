@@ -1,11 +1,11 @@
 <form id="viewBuilder" ng-if="generateViewBuilder==true" ng-submit="submitForm()" novalidate>
 	<div class="input-field" ng-repeat="data in dbData" ng-switch on="data.Type">
+		<label for="{{data.Name}}">{{data.Name}}</label>
 		<textarea name="{{data.Name}}" id="{{data.Name}}" cols="30" rows="10" ng-switch-when="textarea"></textarea>
-		<select name="{{data.Name}}" id="{{data.Name}}" ng-switch-when="select">
+		<select name="{{data.Name}}" id="{{data.Name}}" ng-switch-when="select" class="formviewer-select">
 			<option value="{{options}}" ng-repeat="options in data.SelectValues">{{options}}</option>
 		</select>
 		<input id="{{data.Name}}" type="{{data.Type}}" class="validate" ng-switch-default>
-		<label for="{{data.Name}}">{{data.Name}}</label>
 	</div>
 	<button class="btn waves effect" type="submit">Submit</button>
 </form>

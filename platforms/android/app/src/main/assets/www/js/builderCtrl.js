@@ -9,48 +9,30 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', '$state', function
 	var dbObj = dbservice.openDatabase(mainTable);
 	var dbDataArray = [];
 	$scope.newOptions = [];
-
-	//callback after read operation
-	// var getArray = function (resultsrows) {
-	// 	dbDataArray = [];
-	// 	var length = resultsrows.length;
-	// 	var i = 0;
-	// 	for (i; i < length; i++) {
-	// 		dbDataArray.push(resultsrows.item(i));
-	// 	}
-
-	// 	dbDataArray.forEach(function (element) {
-	// 		if (element.Type == "select") {
-	// 			element.SelectValues = element.SelectValues.split(',');
-	// 		}
-	// 	});
-
-	// 	//manually update view after changes in $scope
-	// 	$scope.$apply(function () {
-	// 		$scope.generateViewBuilder = true;
-	// 		$scope.dbData = dbDataArray;
-	// 	});
-	// 	console.log($scope.dbData);
-	// 	initializeSelect();
-	// };
-
-	// dbservice.readDb(dbObj, getArray);
+	$scope.selectoptionsExist = false;
 
 	$scope.submitToFormView = function () {
-		if ($scope.data.singleSelect == 'select') {
-			document.getElementById('add-select-options').showModal();
-		}
-		else {
-			dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, null, mainTable, dbObj, function () {
-				// dbservice.readDb(dbObj, getArray);
-				initializeSelect();
-				$state.go('home.formviewer', { 'show': true }, { reload: true });
-				// $state.reload();
+		if ($scope.data.singleSelect == null) {
+			window.plugins.toast.show('Please choose Controller Type', 'short', 'bottom', function (a) {
+				console.log('toast success: ' + a);
+			}, function (b) {
+				console.log('toast error: ' + b);
 			});
+		} else {
+			if ($scope.data.singleSelect == 'select') {
+				document.getElementById('add-select-options').showModal();
+			}
+			else {
+				dbservice.insertToDb($scope.data.ctrlName, $scope.data.singleSelect, null, mainTable, dbObj, function () {
+					initializeSelect();
+					$state.go('home.formviewer', { 'show': true }, { reload: true });
+				});
+			}
 		}
 	};
 
 	$scope.addSelectOptions = function () {
+		$scope.selectoptionsExist = true;
 		if ($scope.newOptions == undefined || $scope.newOptions.length == 0) {
 			$scope.newOptions.push($scope.data.newSelect);
 		}
@@ -91,7 +73,7 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', '$state', function
 
 	$scope.hideViewBuilder = function () {
 		$state.go('home.formviewer', { 'show': false }, { reload: true });
-	}
+	};
 
 	$scope.clearDatabase = function () {
 		dbservice.clearDatabase(dbObj);
@@ -105,8 +87,5 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', '$state', function
 		$state.go('home.formviewer', stateParams, { reload: true });
 	};
 
-	$scope.submitForm = function () {
-		console.log('form submitted');
-	};
 }]);
 
