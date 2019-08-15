@@ -51,7 +51,27 @@ formbuilder.controller('BuilderCtrl', ['$scope', 'dbservice', '$state', function
 	};
 
 	$scope.addSelectOptions = function () {
-		$scope.newOptions.push($scope.data.newSelect);
+		if ($scope.newOptions == undefined || $scope.newOptions.length == 0) {
+			$scope.newOptions.push($scope.data.newSelect);
+		}
+		else {
+			var isUnique = true;
+			$scope.newOptions.forEach(function (element) {
+				if (element == $scope.data.newSelect) {
+					isUnique = false;
+				}
+			});
+			if (isUnique) {
+				$scope.newOptions.push($scope.data.newSelect);
+			}
+			else {
+				window.plugins.toast.show('Select option already exists', 'short', 'bottom', function (a) {
+					console.log('toast success: ' + a);
+				}, function (b) {
+					alert('toast error: ' + b);
+				});
+			}
+		}
 	};
 
 	$scope.saveSelectOptions = function () {
